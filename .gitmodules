@@ -1,0 +1,9 @@
+[submodule "simplelib/cmake"]
+	path = simplelib/cmake
+	url = git@github.com:frederikvannoote/cmake-common.git
+[submodule "simpleapp/cmake"]
+	path = simpleapp/cmake
+	url = git@github.com:frederikvannoote/cmake-common.git
+[submodule "complexlib/cmake"]
+	path = complexlib/cmake
+	url = git@github.com:frederikvannoote/cmake-common.git
