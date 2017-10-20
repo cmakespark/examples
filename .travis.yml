@@ -83,6 +83,7 @@ script:
 after_success:
   - cp /tmp/simplelib-build/sdk.zip ${TRAVIS_BUILD_DIR}/simplelib-sdk.zip
   - cp /tmp/complexlib-build/sdk.zip ${TRAVIS_BUILD_DIR}/complexib-sdk.zip
+  - ls -lah ${TRAVIS_BUILD_DIR}
 
 deploy:
   provider: releases
