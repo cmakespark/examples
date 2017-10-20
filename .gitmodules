@@ -4,9 +4,6 @@
 [submodule "simpleapp/cmake"]
 	path = simpleapp/cmake
 	url = git@github.com:frederikvannoote/cmake-common.git
-[submodule "complexlib/cmake"]
-	path = complexlib/cmake
-	url = git@github.com:frederikvannoote/cmake-common.git
 [submodule "QSimpleApp/cmake"]
 	path = QSimpleApp/cmake
 	url = git@github.com:frederikvannoote/cmake-common.git
