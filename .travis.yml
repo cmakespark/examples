@@ -11,6 +11,9 @@ compiler:
   - clang
 
 env:
+  global:
+    - QTDIR=/usr/lib/x86_64-linux-gnu/qt5
+
   matrix:
     - CMAKE_BUILD_TYPE=Debug
     - CMAKE_BUILD_TYPE=Release
@@ -26,6 +29,7 @@ addons:
   apt:
     packages:
     - ninja-build
+    - qtbase5-dev
 
 before_install:
   - |
