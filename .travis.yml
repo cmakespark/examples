@@ -59,6 +59,7 @@ script:
   - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/simplelib
   - cmake --build . --target all
   - cmake --build . --target install
+  - cmake --build . --target sdk
  
   - mkdir /tmp/simpleapp-build
   - cd /tmp/simpleapp-build
@@ -77,4 +78,20 @@ script:
   - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/complexlib
   - cmake --build . --target all
   - cmake --build . --target install
+  - cmake --build . --target sdk
+
+after_success:
+  - cp /tmp/simplelib-build/sdk.zip ${TRAVIS_BUILD_DIR}/simplelib-sdk.zip
+  - cp /tmp/complexlib-build/sdk.zip ${TRAVIS_BUILD_DIR}/complexib-sdk.zip
+
+deploy:
+  provider: releases
+  api_key:
+    secure: AjrgT3n4fvPIe2vn0d/zbqR9BBrLFK1LLLmPu+Uxnx6lkrNLjCstz58waXcrG7Dhp0BfBYbZiSueuDkoY0CEGn90cTZIRvZaBkQIw8nFUvowr5lvl1bGtpMrBJrNsnDNWsjdzA1XTf0l7YgfjYampsdvw8Tr12YcrNeuavajWi0SwLoKHwSBS7kKhaT6yv9aBO/BR3Qx4Oj46tU1o3FjPiI6Uog37upHBoCs7Dnvf4ySxdcLui6q7M1JZSz+DurkfA3F1WAHIKkVoJNyMPq3KpRNmNfYXn2EKW/MeIN/zItoxtYRF5yGmyStvPEU8arhCQa25g+Sx96s71SiVvxkfYGCFaYyNIaoOE2IXSROxF8pDg2wmzzU1uGxWM3wXQXMpdgyezGfaEplclf25ytGHvBRpt0KJfUvJGXt/Dl5Qt7dYS8tXYe7TrI0rSwmW4ycygr2N6W7Bgu1GFUzYfyMYuLlqtsAnedgqxLlwN5oDb28s+MVA2yAkR/vgLRfWrpuX1cDVn4vCYoPK/Z/ibgq6ZYurcUHC5wsHrrRpfgCpvxSTSv8pksbXqXuiZ0wrlcMFEtzGgftEPnPcS1TVamWSGp6nggDTNacEshOmNkSRwlVN2iCO4fuhBW8Anv2S+3CliAppnnpLrZTsINckEmp0Wde/rTWipiMAh/83BliRlU=
+  file: 
+    - simplelib-sdk.zip
+    - complexlib-sdk.zip
+  skip_cleanup: true
+  on:
+    tags: true
 
