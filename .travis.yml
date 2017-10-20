@@ -80,9 +80,9 @@ script:
   - cmake --build . --target install
   - cmake --build . --target sdk
 
-after_success:
+before_deploy:
   - cp /tmp/simplelib-build/sdk.zip ${TRAVIS_BUILD_DIR}/simplelib-sdk.zip
-  - cp /tmp/complexlib-build/sdk.zip ${TRAVIS_BUILD_DIR}/complexib-sdk.zip
+  - cp /tmp/complexlib-build/sdk.zip ${TRAVIS_BUILD_DIR}/complexlib-sdk.zip
   - ls -lah ${TRAVIS_BUILD_DIR}
 
 deploy:
@@ -92,6 +92,7 @@ deploy:
   file: 
     - simplelib-sdk.zip
     - complexlib-sdk.zip
+  file_glob: true
   skip_cleanup: true
   on:
     tags: true
