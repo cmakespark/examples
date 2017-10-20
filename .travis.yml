@@ -29,7 +29,8 @@ addons:
     - ninja-build
 
 before_install:
-  - # Install cmake and ninja
+  - |
+    # Install cmake and ninja
     if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
       brew update
       brew install ninja cmake
