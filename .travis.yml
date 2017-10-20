@@ -58,9 +58,23 @@ script:
   - cd /tmp/simplelib-build
   - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/simplelib
   - cmake --build . --target all
+  - cmake --build . --target install
  
+  - mkdir /tmp/simpleapp-build
+  - cd /tmp/simpleapp-build
+  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -DCC1simplelib_DIR=/tmp/installed/lib/cmake/CC1simplelib -G Ninja ${TRAVIS_BUILD_DIR}/simpleapp
+  - cmake --build . --target all
+  - cmake --build . --target install
+
+  - mkdir /tmp/QSimpleApp-build
+  - cd /tmp/QSimpleApp-build
+  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -DCC1simplelib_DIR=/tmp/installed/lib/cmake/CC1simplelib -G Ninja ${TRAVIS_BUILD_DIR}/QSimpleApp/
+  - cmake --build . --target all
+  - cmake --build . --target install
+
   - mkdir /tmp/complexlib-build
   - cd /tmp/complexlib-build
   - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/complexlib
   - cmake --build . --target all
+  - cmake --build . --target install
 
