@@ -52,9 +52,11 @@ install:
 script:  
   - mkdir /tmp/simplelib-build
   - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/simplelib
-  - cmake --build /tmp/simplelib-build --target all
+  - cd /tmp/simplelib-build
+  - cmake --build . --target all
  
   - mkdir /tmp/complexlib-build
   - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/complexlib
-  - cmake --build /tmp/complexlib-build --target all
+  - cd /tmp/complexlib-build
+  - cmake --build . --target all
 
