@@ -35,7 +35,7 @@ before_install:
       cd /tmp
       mkdir cmake
       travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-      export PATH=${DEPS_DIR}/cmake/bin:${PATH}
+      export PATH=/tmp/cmake/bin:${PATH}
     else
       if ! brew ls --version cmake &>/dev/null; then brew install cmake; fi
     fi
