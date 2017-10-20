@@ -1,0 +1,44 @@
+language: cpp
+sudo: required
+dist: trusty
+
+os:
+  - linux
+  - osx
+
+compiler:
+  - gcc
+  - clang
+
+env:
+  matrix:
+    - CMAKE_BUILD_TYPE=Debug
+    - CMAKE_BUILD_TYPE=Release
+
+matrix:
+  exclude:
+    - os: linux
+      compiler: clang
+    - os: osx
+      compiler: gcc
+
+addons:
+  apt:
+    packages:
+    - cmake
+    - ninja-build
+
+before_install:
+  - # Install cmake and ninja
+    if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
+      brew update
+      brew install ninja cmake
+    fi
+
+install:
+  - mkdir /tmp/installed
+
+script:  
+  - mkdir /tmp/simplelib-build
+  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/simplelib
+  - cmake --build /tmp/simplelib-build --target all
