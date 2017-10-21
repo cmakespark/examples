@@ -87,6 +87,16 @@ script:
   - cmake --build . --target install
   - cmake --build . --target sdk
 
+after_success:
+  - |
+    # Tag with 'develop'
+    if [[ "${TRAVIS_BRANCH}" == "develop" ]]; then
+      cd ${TRAVIS_BUILD_DIR}
+      git tag -d develop
+      git tag -a develop
+      git push origin develop -f
+    fi
+
 before_deploy:
   - mkdir ${TRAVIS_BUILD_DIR}/deploy
   - cd ${TRAVIS_BUILD_DIR}
