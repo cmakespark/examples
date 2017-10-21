@@ -89,11 +89,11 @@ script:
 
 after_success:
   - |
-    # Tag with 'develop'
+    # Tag with develop branch with 'latest_develop' tag
     if [[ "${TRAVIS_BRANCH}" == "develop" ]]; then
       cd ${TRAVIS_BUILD_DIR}
-      git tag --force develop
-      git push --force origin develop
+      git tag --force latest_develop
+      git push --force origin latest_develop
     fi
 
 before_deploy:
