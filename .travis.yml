@@ -89,6 +89,7 @@ script:
 
 before_deploy:
   - mkdir ${TRAVIS_BUILD_DIR}/deploy
+  - cd ${TRAVIS_BUILD_DIR}
   - cp /tmp/simplelib-build/sdk.zip ${TRAVIS_BUILD_DIR}/deploy/simplelib-${TRAVIS_OS_NAME}-x64-${CMAKE_BUILD_TYPE}-sdk.zip
   - cp /tmp/complexlib-build/sdk.zip ${TRAVIS_BUILD_DIR}/deploy/complexlib-${TRAVIS_OS_NAME}-x64-${CMAKE_BUILD_TYPE}-sdk.zip
   - ls -l ${TRAVIS_BUILD_DIR}/deploy
