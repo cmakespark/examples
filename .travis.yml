@@ -92,9 +92,8 @@ after_success:
     # Tag with 'develop'
     if [[ "${TRAVIS_BRANCH}" == "develop" ]]; then
       cd ${TRAVIS_BUILD_DIR}
-      git tag -d develop
-      git tag -a develop
-      git push origin develop -f
+      git tag --force develop
+      git push --force origin develop
     fi
 
 before_deploy:
