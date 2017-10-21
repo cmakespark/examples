@@ -12,7 +12,7 @@ compiler:
 
 env:
   global:
-    - QTDIR=/usr/lib/x86_64-linux-gnu/qt5
+    - 
 
   matrix:
     - CMAKE_BUILD_TYPE=Debug
@@ -45,9 +45,17 @@ before_install:
     fi
   - |
     # Install cmake and ninja
-    if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      brew update
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      export QTDIR=/usr/lib/x86_64-linux-gnu/qt5
+      export PATH="$QTDIR/bin:$PATH"
+      qt*-env.sh
+    else
+      brew update > /dev/null
+      brew tap homebrew/versions
       brew install ninja
+      brew install qt@5.9
+      export QTDIR="/usr/local/opt/qt5"
+      export PATH="$QTDIR/bin:$PATH"
     fi
 
 install:
@@ -82,8 +90,9 @@ script:
 
 before_deploy:
   - mkdir ${TRAVIS_BUILD_DIR}/deploy
-  - cp /tmp/simplelib-build/sdk.zip ${TRAVIS_BUILD_DIR}/deploy/simplelib-sdk.zip
-  - cp /tmp/complexlib-build/sdk.zip ${TRAVIS_BUILD_DIR}/deploy/complexlib-sdk.zip
+  - cp /tmp/simplelib-build/sdk.zip ${TRAVIS_BUILD_DIR}/deploy/simplelib-${TRAVIS_OS_NAME}-x64-${CMAKE_BUILD_TYPE}-sdk.zip
+  - cp /tmp/complexlib-build/sdk.zip ${TRAVIS_BUILD_DIR}/deploy/complexlib-${TRAVIS_OS_NAME}-x64-${CMAKE_BUILD_TYPE}-sdk.zip
+  - ls -l ${TRAVIS_BUILD_DIR}/deploy
 
 deploy:
   provider: releases
