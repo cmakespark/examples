@@ -93,6 +93,7 @@ deploy:
   file_glob: true
   skip_cleanup: true
   overwrite: true
+  prerelease: true
   on:
     tags: true
 
