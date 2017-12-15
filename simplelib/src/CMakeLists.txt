@@ -1,14 +1,14 @@
 set(${TARGET_NAME}_SOURCES
-    dog.cpp
+    dog/dog.cpp
 )
 
 set(${TARGET_NAME}_PUBLIC_HEADERS
     simplelib.h
-    dog.h
+    dog/dog.h
 )
 
 set(${TARGET_NAME}_PRIVATE_HEADERS
-    dog_p.h
+    dog/dog_p.h
 )
 
 set(${TARGET_NAME}_INCLUDE_DIRS ${CMAKE_CURRENT_LIST_DIR}
