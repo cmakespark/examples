@@ -15,9 +15,6 @@ set(SO_VERSION 1)
 # Build options #
 #################
 
-#include required libraries and include directories
-find_package(CC1ComplexLib REQUIRED)
-
 include(DefineProject)
 
 add_subdirectory(src)

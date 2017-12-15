@@ -12,10 +12,6 @@ set(${TARGET_NAME}_PRIVATE_HEADERS
     car_p.h
 )
 
-set(${TARGET_NAME}_INCLUDE_DIRS
-    ${CMAKE_CURRENT_LIST_DIR}
-)
-
 set(${TARGET_NAME}_DEPENDENT_PACKAGES
 )
 
@@ -29,10 +25,12 @@ add_library(${TARGET_NAME}
             ${${TARGET_NAME}_SOURCES}
             ${${TARGET_NAME}_PUBLIC_HEADERS}
             ${${TARGET_NAME}_PRIVATE_HEADERS})
+add_library(${PROJECT_NAME_PREFIX}${SO_VERSION}::${TARGET_NAME} ALIAS ${TARGET_NAME})
 
 # Add directories of this library
-target_include_directories(${TARGET_NAME} PRIVATE ${${TARGET_NAME}_INCLUDE_DIRS})
-
+target_include_directories(${TARGET_NAME} PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    )
 # add the Qtlibraries to the list of linked libraries
 # the Qt libraries are added as PUBLIC, so that projects using this module will transitively
 # link to these libraries as well. Include paths and compiler settings will also be promoted.

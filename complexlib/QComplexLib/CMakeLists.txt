@@ -10,6 +10,5 @@ set(SO_VERSION 1)
 include(DefineProject)
 
 find_package(Qt5Core REQUIRED)
-find_package(CC1ComplexLib REQUIRED)
 
 add_subdirectory(src)
