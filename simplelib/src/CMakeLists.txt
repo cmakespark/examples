@@ -25,6 +25,7 @@ add_library(${TARGET_NAME}
             ${${TARGET_NAME}_SOURCES}
             ${${TARGET_NAME}_PUBLIC_HEADERS}
             ${${TARGET_NAME}_PRIVATE_HEADERS})
+add_library(${PROJECT_NAME_PREFIX}${SO_VERSION}::${TARGET_NAME} ALIAS ${TARGET_NAME})
 
 # Add directories of this library
 target_include_directories(${TARGET_NAME} PUBLIC
