@@ -36,5 +36,3 @@ target_include_directories(${TARGET_NAME} PUBLIC
 # the Qt libraries are added as PUBLIC, so that projects using this module will transitively
 # link to these libraries as well. Include paths and compiler settings will also be promoted.
 target_link_libraries(${TARGET_NAME} PUBLIC CC1::ComplexLib Qt5::Core)
-
-include(GeneratePackage)
