@@ -1,15 +1,18 @@
 
 set(${TARGET_NAME}_SOURCES
     car.cpp
+    trailer/trailer.cpp
 )
 
 set(${TARGET_NAME}_PUBLIC_HEADERS
     complexlib.h
     car.h
+    trailer/trailer.h
 )
 
 set(${TARGET_NAME}_PRIVATE_HEADERS
     car_p.h
+    trailer/trailer_p.h
 )
 
 set(${TARGET_NAME}_DEPENDENT_PACKAGES
@@ -30,6 +33,7 @@ add_library(${PROJECT_NAME_PREFIX}${SO_VERSION}::${TARGET_NAME} ALIAS ${TARGET_N
 # Add directories of this library
 target_include_directories(${TARGET_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/trailer
     )
 # add the Qtlibraries to the list of linked libraries
 # the Qt libraries are added as PUBLIC, so that projects using this module will transitively
