@@ -4,7 +4,7 @@ project(complexlib)
 
 # Download build system
 if(DEFINED ENV{CMAKE_COMMON})
-    list(APPEND CMAKE_MODULE_PATH "ENV{CMAKE_COMMON}")
+    list(APPEND CMAKE_MODULE_PATH "$ENV{CMAKE_COMMON}")
 else()
     if(NOT EXISTS "${CMAKE_BINARY_DIR}/buildsys")
         message(STATUS "Downloading buildsystem...")
