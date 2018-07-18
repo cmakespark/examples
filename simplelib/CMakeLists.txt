@@ -1,6 +1,19 @@
 cmake_minimum_required(VERSION 3.4.3 FATAL_ERROR)
 project(simplelib)
 
+# Download build system
+if(DEFINED ENV{CMAKE_COMMON})
+    list(APPEND CMAKE_MODULE_PATH "ENV{CMAKE_COMMON}")
+else()
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/buildsys")
+        message(STATUS "Downloading buildsystem...")
+
+        find_package(Git REQUIRED)
+        execute_process(COMMAND ${GIT_EXECUTABLE} clone --branch master git@github.com:frederikvannoote/cmake-common.git ${CMAKE_BINARY_DIR}/buildsys)
+    endif()
+    list(APPEND CMAKE_MODULE_PATH "${CMAKE_BINARY_DIR}/buildsys")
+endif()
+
 ###############################
 # Project specific parameters #
 # Change as you see fit       #
@@ -17,7 +30,6 @@ set(SO_VERSION 1)
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
 
 # Include common cmake modules
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include(CommonConfig)
 
 include(DefineProject)
