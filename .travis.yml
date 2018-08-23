@@ -33,17 +33,6 @@ addons:
 
 before_install:
   - |
-    # Install cmake
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      CMAKE_URL="http://www.cmake.org/files/v3.5/cmake-3.5.2-Linux-x86_64.tar.gz"
-      cd /tmp
-      mkdir cmake
-      travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-      export PATH=/tmp/cmake/bin:${PATH}
-    else
-      if ! brew ls --version cmake &>/dev/null; then brew install cmake; fi
-    fi
-  - |
     # Install cmake and ninja
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
       export QTDIR=/usr/lib/x86_64-linux-gnu/qt5
@@ -58,61 +47,46 @@ before_install:
     fi
 
 install:
+# Clone examples: they are the code to test against.
+  - git clone https://github.com/cmakespark/cmake.git ${HOME}/cmake
+  - export CMAKESPARK=${HOME}/cmake
   - mkdir /tmp/installed
 
-script:  
-  - mkdir /tmp/simplelib-build
-  - cd /tmp/simplelib-build
-  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/simplelib
-  - cmake --build . --target all
-  - cmake --build . --target install
-  - cmake --build . --target sdk
- 
-  - mkdir /tmp/simpleapp-build
-  - cd /tmp/simpleapp-build
-  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -DCC1simplelib_DIR=/tmp/installed/lib/cmake/CC1simplelib -G Ninja ${TRAVIS_BUILD_DIR}/simpleapp
-  - cmake --build . --target all
-  - cmake --build . --target install
-
-  - mkdir /tmp/QSimpleApp-build
-  - cd /tmp/QSimpleApp-build
-  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -DCC1simplelib_DIR=/tmp/installed/lib/cmake/CC1simplelib -G Ninja ${TRAVIS_BUILD_DIR}/QSimpleApp/
-  - cmake --build . --target all
-  - cmake --build . --target install
-
-  - mkdir /tmp/complexlib-build
-  - cd /tmp/complexlib-build
-  - cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/complexlib
-  - cmake --build . --target all
-  - cmake --build . --target install
-  - cmake --build . --target sdk
-
-after_success:
-  - git config --global user.email "builds@travis-ci.com"
-  - git config --global user.name "Travis CI"
+script:
   - |
-    # Tag with develop branch with 'latest_develop' tag
-    if [[ "${TRAVIS_BRANCH}" == "develop" ]]; then
-      cd ${TRAVIS_BUILD_DIR}
-      git tag --force latest_develop -m "Generated tag from TravisCI build ${TRAVIS_BUILD_NUMBER}"
-      git push --force https://${GITHUBKEY}@github.com/frederikvannoote/cmake-common-examples.git latest_develop
-    fi
+    # Build and install simplelib
+    mkdir /tmp/simplelib-build
+    cd /tmp/simplelib-build
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${HOME}/simplelib
+    cmake --build . --target all
+    cmake --build . --target install
+    cmake --build . --target sdk
+  - |
+    # Relocate library
+    cp -r /tmp/installed /tmp/relocated
+ 
+  - |
+    # Build and install Simpleapp
+    mkdir /tmp/simpleapp-build
+    cd /tmp/simpleapp-build
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -DCC1simplelib_DIR=/tmp/relocated/lib/cmake/CC1simplelib -G Ninja ${HOME}/simpleapp
+    cmake --build . --target all
+    cmake --build . --target install
 
-before_deploy:
-  - mkdir ${TRAVIS_BUILD_DIR}/deploy
-  - cd ${TRAVIS_BUILD_DIR}
-  - cp /tmp/simplelib-build/sdk.zip ${TRAVIS_BUILD_DIR}/deploy/simplelib-${TRAVIS_OS_NAME}-x64-${CMAKE_BUILD_TYPE}-sdk.zip
-  - cp /tmp/complexlib-build/sdk.zip ${TRAVIS_BUILD_DIR}/deploy/complexlib-${TRAVIS_OS_NAME}-x64-${CMAKE_BUILD_TYPE}-sdk.zip
+  - |
+    # Build and install QSimpleApp
+    mkdir /tmp/QSimpleApp-build
+    cd /tmp/QSimpleApp-build
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -DCC1simplelib_DIR=/tmp/relocated/lib/cmake/CC1simplelib -G Ninja ${HOME}/QSimpleApp
+    cmake --build . --target all
+    cmake --build . --target install
 
-deploy:
-  provider: releases
-  api_key:
-    secure: "gE6FJZt3+moGvA6XCwAgUNF1d/23lW0RObod1B6jJK8i9hk5UplR35JEtGiewY3c85IMlHvvZSsP7dSejyl18NE4NTat18zC43x1NH6sdLXJMU4xN7jhDGIEV22BjktsPabRL8Bb6J8MNPlBCyGbffrxWlvApOSPy8hDaINLa60fAZexsVp4nBQLFK5eTRV0OyPrJtyxP1amgwrOB9Z7BQ698oFyGdGtZH4nt5e+98ItcCT6OPUL/BbYuans/e7T6p+4YSxfLClV66jDW2jFh28bZBpPceFIVzluqWf/wNduPtl6gbjsRnLqmHwl4V2IwoZScxV6gB089IOV7/qdp0bxKDhaJ9MJuizWb4h+0aJO3/o/5VYFfyNPS8m7jpJjVM5NIQ3c/lT+flVt6m6WnHj3SdebJdkeg8BLywMz0VeIoiVOEHmHxnYUjWmhh1VTtuT17jEmWMw7GSKoZ2EBxXedGY4DIu+aGMfB+Z+5hiE98b+24l4zkouJzJNzKVma8E7/Vw892B5FY2rTyZQmJi119Z83ePjD4+71nyKczIW1kZNbeEgEjyp+XLhXP+IU9fkWlkx8glymYLoqSTwKYolg5VOH4WyJ2Dxwnl/XlBH2fKq2DmOxPq+gHv3DgDb8SKjpMnaYAExOAayksEwC6KnqwcYjdS7ctU35LKVhZeQ="	
-  file: deploy/*
-  file_glob: true
-  skip_cleanup: true
-  overwrite: true
-  prerelease: true
-  on:
-    tags: true
+  - |
+    # Build and install complex lib
+    mkdir /tmp/complexlib-build
+    cd /tmp/complexlib-build
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${HOME}/complexlib
+    cmake --build . --target all
+    cmake --build . --target install
+    cmake --build . --target sdk
 
