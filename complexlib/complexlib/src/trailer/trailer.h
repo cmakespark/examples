@@ -4,16 +4,16 @@
 #include "complexlib.h"
 
 
-class CCCOMPLEXLIB_EXPORT Trailer
+class Trailer
 {
 public:
-    explicit Trailer();
-    ~Trailer();
+    CCCOMPLEXLIB_EXPORT explicit Trailer();
+    CCCOMPLEXLIB_EXPORT ~Trailer();
 
-    void drive();
-    void stop();
+    CCCOMPLEXLIB_EXPORT void drive();
+    CCCOMPLEXLIB_EXPORT void stop();
 
-    bool isDriving() const;
+    CCCOMPLEXLIB_EXPORT bool isDriving() const;
 
 private:
     Trailer(const Trailer &other) = delete;

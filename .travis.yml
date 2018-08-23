@@ -16,7 +16,13 @@ env:
 
   matrix:
     - CMAKE_BUILD_TYPE=Debug
+      SHARED=ON
+    - CMAKE_BUILD_TYPE=Debug
+      SHARED=OFF
     - CMAKE_BUILD_TYPE=Release
+      SHARED=ON
+    - CMAKE_BUILD_TYPE=Release
+      SHARED=OFF
 
 matrix:
   exclude:
@@ -47,6 +53,17 @@ before_install:
     fi
 
 install:
+  # Install GCC 6
+  - |
+    # Install GCC
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+      sudo apt-get -qq update
+      travis_retry sudo apt-get -qq install gcc-6 g++-6
+      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 90
+      sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+    fi
+
 # Clone examples: they are the code to test against.
   - git clone https://github.com/cmakespark/cmake.git ${HOME}/cmake
   - export CMAKESPARK=${HOME}/cmake
@@ -57,7 +74,7 @@ script:
     # Build and install simplelib
     mkdir /tmp/simplelib-build
     cd /tmp/simplelib-build
-    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/simplelib
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_SHARED_LIBS=${SHARED} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/simplelib
     cmake --build . --target all
     cmake --build . --target install
     cmake --build . --target sdk
@@ -85,8 +102,9 @@ script:
     # Build and install complex lib
     mkdir /tmp/complexlib-build
     cd /tmp/complexlib-build
-    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/complexlib
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_SHARED_LIBS=${SHARED} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/complexlib
     cmake --build . --target all
+    cmake --build . --target test
     cmake --build . --target install
     cmake --build . --target sdk
 
