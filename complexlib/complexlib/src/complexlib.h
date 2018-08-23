@@ -11,7 +11,7 @@
 #    define DECL_IMPORT     __attribute__((visibility("default")))
 #endif
 
-#ifdef complexlib_BUILD_SHARED_LIBS
+#ifdef CCComplexLib_BUILD_SHARED_LIBS
 #  if defined(CCCOMPLEXLIB_LIBRARY_BUILD)
 #    define CCCOMPLEXLIB_EXPORT DECL_EXPORT
 #    ifdef PRIVATE_TESTS_ENABLED
