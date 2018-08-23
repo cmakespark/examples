@@ -87,6 +87,7 @@ script:
     cd /tmp/complexlib-build
     cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/complexlib
     cmake --build . --target all
+    cmake --build . --target test
     cmake --build . --target install
     cmake --build . --target sdk
 
