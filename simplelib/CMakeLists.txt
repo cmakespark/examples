@@ -4,6 +4,7 @@ project(simplelib)
 # Download build system
 if(DEFINED ENV{CMAKESPARK})
     list(APPEND CMAKE_MODULE_PATH "$ENV{CMAKESPARK}")
+    message(STATUS "Using cmakespark from $ENV{CMAKESPARK}")
 else()
     if(NOT EXISTS "${CMAKE_BINARY_DIR}/buildsys")
         message(STATUS "Downloading buildsystem...")
