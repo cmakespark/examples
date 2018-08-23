@@ -6,7 +6,7 @@
 
 
 class QCarPrivate;
-class CCCOMPLEXLIB_EXPORT QCar: public QObject
+class QCOMPLEXLIB_EXPORT QCar: public QObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(QCar)

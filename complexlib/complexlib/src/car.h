@@ -4,16 +4,16 @@
 #include "complexlib.h"
 
 
-class CCCOMPLEXLIB_EXPORT Car
+class Car
 {
 public:
-    explicit Car();
-    ~Car();
+    CCCOMPLEXLIB_EXPORT explicit Car();
+    CCCOMPLEXLIB_EXPORT ~Car();
 
-    void drive();
-    void stop();
+    CCCOMPLEXLIB_EXPORT void drive();
+    CCCOMPLEXLIB_EXPORT void stop();
 
-    bool isDriving() const;
+    CCCOMPLEXLIB_EXPORT bool isDriving() const;
 
 private:
     Car(const Car &other) = delete;

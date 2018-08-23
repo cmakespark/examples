@@ -41,7 +41,7 @@ test_script:
   # Build and install simplelib
   - mkdir simplelib-build
   - cd simplelib-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -G Ninja ../simplelib
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DBUILD_SHARED_LIBS=%SHARED% -DCMAKE_INSTALL_PREFIX=../installed -G Ninja ../simplelib
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target install
   - cmake --build . --config %configuration% --target sdk
@@ -69,7 +69,7 @@ test_script:
   # Build and install complex lib
   - mkdir complexlib-build
   - cd complexlib-build
-  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -G Ninja ../complexlib
+  - cmake -DCMAKE_BUILD_TYPE=%configuration% -DBUILD_SHARED_LIBS=%SHARED% -DCMAKE_INSTALL_PREFIX=../installed -G Ninja ../complexlib
   - cmake --build . --config %configuration% --target all
   - cmake --build . --config %configuration% --target test
   - cmake --build . --config %configuration% --target install

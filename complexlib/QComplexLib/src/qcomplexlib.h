@@ -1,22 +1,33 @@
 #pragma once
 
-#ifdef CCcomplexlib_BUILD_SHARED_LIBS
-#  if defined(CCCOMPLEXLIB_BUILD_LIBRARY)
-#    define CCCOMPLEXLIB_EXPORT __declspec(dllexport)
+#ifdef __linux__
+#    define DECL_EXPORT     __attribute__((visibility("default")))
+#    define DECL_IMPORT     __attribute__((visibility("default")))
+#elif _WIN32
+#    define DECL_EXPORT     __declspec(dllexport)
+#    define DECL_IMPORT     __declspec(dllimport)
+#else
+#    define DECL_EXPORT     __attribute__((visibility("default")))
+#    define DECL_IMPORT     __attribute__((visibility("default")))
+#endif
+
+#ifdef CCQComplexLib_BUILD_SHARED_LIBS
+#  if defined(QCOMPLEXLIB_LIBRARY_BUILD)
+#    define QCOMPLEXLIB_EXPORT DECL_EXPORT
 #    ifdef PRIVATE_TESTS_ENABLED
-#      define CCCOMPLEXLIB_AUTOTEST_EXPORT __declspec(dllexport)
+#      define QCOMPLEXLIB_AUTOTEST_EXPORT DECL_EXPORT
 #    else
-#      define CCCOMPLEXLIB_AUTOTEST_EXPORT
+#      define QCOMPLEXLIB_AUTOTEST_EXPORT
 #    endif
 #  else
-#    define CCCOMPLEXLIB_EXPORT __declspec(dllimport)
+#    define QCOMPLEXLIB_EXPORT DECL_IMPORT
 #    ifdef PRIVATE_TESTS_ENABLED
-#      define CCCOMPLEXLIB_AUTOTEST_EXPORT __declspec(dllimport)
+#      define QCOMPLEXLIB_AUTOTEST_EXPORT DECL_IMPORT
 #    else
-#      define CCCOMPLEXLIB_AUTOTEST_EXPORT
+#      define QCOMPLEXLIB_AUTOTEST_EXPORT
 #    endif
 #  endif
 #else
-#  define CCCOMPLEXLIB_EXPORT
-#  define CCCOMPLEXLIB_AUTOTEST_EXPORT
+#  define QCOMPLEXLIB_EXPORT
+#  define QCOMPLEXLIB_AUTOTEST_EXPORT
 #endif

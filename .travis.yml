@@ -16,7 +16,13 @@ env:
 
   matrix:
     - CMAKE_BUILD_TYPE=Debug
+      SHARED=ON
+    - CMAKE_BUILD_TYPE=Debug
+      SHARED=OFF
     - CMAKE_BUILD_TYPE=Release
+      SHARED=ON
+    - CMAKE_BUILD_TYPE=Release
+      SHARED=OFF
 
 matrix:
   exclude:
@@ -68,7 +74,7 @@ script:
     # Build and install simplelib
     mkdir /tmp/simplelib-build
     cd /tmp/simplelib-build
-    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/simplelib
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_SHARED_LIBS=${SHARED} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/simplelib
     cmake --build . --target all
     cmake --build . --target install
     cmake --build . --target sdk
@@ -96,7 +102,7 @@ script:
     # Build and install complex lib
     mkdir /tmp/complexlib-build
     cd /tmp/complexlib-build
-    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/complexlib
+    cmake -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_SHARED_LIBS=${SHARED} -DCMAKE_INSTALL_PREFIX=/tmp/installed -G Ninja ${TRAVIS_BUILD_DIR}/complexlib
     cmake --build . --target all
     cmake --build . --target test
     cmake --build . --target install
