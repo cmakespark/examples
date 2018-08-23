@@ -71,6 +71,7 @@ test_script:
   - cd complexlib-build
   - cmake -DCMAKE_BUILD_TYPE=%configuration% -DCMAKE_INSTALL_PREFIX=../installed -G Ninja ../complexlib
   - cmake --build . --config %configuration% --target all
+  - cmake --build . --config %configuration% --target test
   - cmake --build . --config %configuration% --target install
   - cmake --build . --config %configuration% --target sdk
   - cd ..
