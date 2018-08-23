@@ -14,8 +14,11 @@ set(${TARGET_NAME}_PRIVATE_HEADERS
 set(${TARGET_NAME}_DEPENDENT_PACKAGES
 )
 
-add_definitions(-DSIMPLELIB_LIBRARY_BUILD)
-
+add_definitions(-DSIMPLELIB_BUILD_LIBRARY)
+# When set to OFF, the library will be built as a static library
+if (${BUILD_SHARED_LIBS})
+    add_definitions(-D${PROJECT_NAME_PREFIX}${PROJECT_BASE_NAME}_BUILD_SHARED_LIBS)
+endif()
 
 # will be a static or dynamic library based on the setting of BUILD_SHARED_LIBS
 # see: https://cmake.org/cmake/help/v2.8.12/cmake.html#command%3aadd_library
