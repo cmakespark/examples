@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef CCsimplelib_BUILD_SHARED_LIBS
-#  if defined(CCSIMPLELIB_BUILD_LIBRARY)
+#  if defined(SIMPLELIB_BUILD_LIBRARY)
 #    define CCSIMPLELIB_EXPORT __declspec(dllexport)
 #    ifdef PRIVATE_TESTS_ENABLED
 #      define CCSIMPLELIB_AUTOTEST_EXPORT __declspec(dllexport)

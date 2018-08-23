@@ -4,16 +4,16 @@
 #include "simplelib.h"
 
 
-class CCSIMPLELIB_EXPORT Dog
+class Dog
 {
 public:
-    explicit Dog();
-    ~Dog();
+    CCSIMPLELIB_EXPORT explicit Dog();
+    CCSIMPLELIB_EXPORT ~Dog();
 
-    int weight() const;
+    CCSIMPLELIB_EXPORT int weight() const;
 
-    void bark();
-    int numberOfBarks() const;
+    CCSIMPLELIB_EXPORT void bark();
+    CCSIMPLELIB_EXPORT int numberOfBarks() const;
 
 private:
     Dog(const Dog &other) = delete;
