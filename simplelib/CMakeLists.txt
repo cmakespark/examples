@@ -20,7 +20,3 @@ include(CommonConfig)
 
 add_subdirectory(src)
 add_subdirectory(example)
-
-#createpack(NAME simplelib
-#    VERSION 2.0.0
-#    TARGETS simplelib)
