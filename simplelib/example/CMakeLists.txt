@@ -1,3 +1,6 @@
-add_executable(example main.cpp)
-target_link_libraries(example PUBLIC CC1::simplelib)
 
+createapp(NAME example
+    SOURCES main.cpp
+    DEPS CC2::SimpleLib
+    CONSOLE
+    VERSION 2.0.0)
