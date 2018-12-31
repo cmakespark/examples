@@ -16,26 +16,11 @@ else()
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_BINARY_DIR}/buildsys")
 endif()
 
-###############################
-# Project specific parameters #
-# Change as you see fit       #
-###############################
-set(PROJECT_NAME_PREFIX CC)
-set(PROJECT_BASE_NAME SimpleApp)
-set(FULL_VERSION 1.0.0)
-set(SO_VERSION 1)
-
-#################
-# Build options #
-#################
-
 # Include common cmake modules
 include(CommonConfig)
 
 #include required libraries and include directories
-find_package(CC1simplelib REQUIRED)
+find_package(CC2SimpleLib REQUIRED)
 find_package(Qt5Core REQUIRED)
-
-include(DefineProject)
 
 add_subdirectory(src)

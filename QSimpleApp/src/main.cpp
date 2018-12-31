@@ -1,6 +1,6 @@
 #include <QCoreApplication>
 #include <QDebug>
-#include <CC1simplelib>
+#include <dog.h>
 #include <iostream>
 
 
