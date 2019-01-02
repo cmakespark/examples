@@ -1,6 +1,6 @@
 # Examples
 
-These are the examples of how the cmake build system of https://github.com/frederikvannoote/cmake-common should be used.
+These are the examples of how the cmake build system of https://github.com/cmakespark/cmake should be used.
 This repository are also the tests of this build system.
 
 ## Simplelib
@@ -15,7 +15,7 @@ The simple app example is somewhat related to the example code in the simplelib 
 This shows how an application should be linked to a library outside of it's cmake tree.
 
 ```
-CMAKE -DCC1simpledir_DIR /path/to/installed/lib/cmake/CC1simpledir
+CMAKE -DCC2SimpleLib_DIR /path/to/installed/lib/cmake/CC2SimpleLib
 ```
 
 ## QSimpleApp
